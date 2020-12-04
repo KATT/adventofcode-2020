@@ -999,35 +999,36 @@ const list = `
 5-10 w: zzcwwwwwwkwwwqws
 1-7 c: ccrmhdchwbr
 7-11 g: xzgnggggrggrg
-`
+`;
 
-const processed = list.trim().split('\n').map((str) => {
-  const parts = str.split(' ')
-  const [pos1, pos2] = parts[0].split('-').map(Number)
-  const letter = parts[1][0]
-  console.log(parts)
-  const password = parts[2]
-  if (pos1 > pos2) {
-    throw new Error()
-  }
-  return { str, pos1, pos2, letter, password }
-})
+const processed = list
+  .trim()
+  .split('\n')
+  .map((str) => {
+    const parts = str.split(' ');
+    const [pos1, pos2] = parts[0].split('-').map(Number);
+    const letter = parts[1][0];
+    console.log(parts);
+    const password = parts[2];
+    if (pos1 > pos2) {
+      throw new Error();
+    }
+    return { str, pos1, pos2, letter, password };
+  });
 
-console.log(processed)
-
+console.log(processed);
 
 const validPasswords = processed.filter(({ password, pos1, pos2, letter }) => {
-  let numOcurrences = 0
+  let numOcurrences = 0;
   if (password[pos1 - 1] == letter) {
-    numOcurrences++
+    numOcurrences++;
   }
   if (password[pos2 - 1] === letter) {
-    numOcurrences++
+    numOcurrences++;
   }
 
-  return numOcurrences === 1
-})
+  return numOcurrences === 1;
+});
 
-
-console.log(validPasswords)
-console.log(validPasswords.length, 'of', processed.length)
+console.log(validPasswords);
+console.log(validPasswords.length, 'of', processed.length);

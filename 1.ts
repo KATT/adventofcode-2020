@@ -199,18 +199,17 @@ const list = `
 1981
 1791
 1975
-`
+`;
 
-const nums = list.trim().split('\n').map(Number)
+const nums = list.trim().split('\n').map(Number);
 
 console.log('nums', nums);
 
 for (const num1 of nums) {
   for (const num2 of nums) {
-    
     if (num1 + num2 === 2020) {
-      console.log({num1, num2})
-      console.log(num1*num2)
+      console.log({ num1, num2 });
+      console.log(num1 * num2);
     }
   }
 }

@@ -322,15 +322,17 @@ const input = `
 ##..#..#.#.....##.........#.#.#
 ..##.##..#.##..........##.#..#.
 ...#..#####.......#.........#..
-`
+`;
 
-const parsed = input.trim().split('\n').map((str) => {
-  return str
-})
-const xPosMax = parsed[0].length
+const parsed = input
+  .trim()
+  .split('\n')
+  .map((str) => {
+    return str;
+  });
+const xPosMax = parsed[0].length;
 
-
-console.log({ parsed, maxIndex: xPosMax })
+console.log({ parsed, maxIndex: xPosMax });
 
 const STRATEGIES: [number, number][] = [
   [1, 1],
@@ -338,28 +340,28 @@ const STRATEGIES: [number, number][] = [
   [5, 1],
   [7, 1],
   [1, 2],
-]
-const STEP_DOWN = 1
-const STEP_RIGHT = 3
+];
+const STEP_DOWN = 1;
+const STEP_RIGHT = 3;
 
-const result: number[] = []
+const result: number[] = [];
 for (const [STEP_RIGHT, STEP_DOWN] of STRATEGIES) {
-  let posX = 0
-  let posY = 0
+  let posX = 0;
+  let posY = 0;
 
-  let numTrees = 0
+  let numTrees = 0;
 
   while (posY < parsed.length) {
     if (parsed[posY][posX] === '#') {
-      numTrees++
+      numTrees++;
     }
-    posX += STEP_RIGHT
-    posX %= xPosMax
+    posX += STEP_RIGHT;
+    posX %= xPosMax;
 
-    posY += STEP_DOWN
+    posY += STEP_DOWN;
   }
-  result.push(numTrees)
+  result.push(numTrees);
 }
 
-console.log(result)
-console.log(result.reduce((sum, num) => sum * num, 1))
+console.log(result);
+console.log(result.reduce((sum, num) => sum * num, 1));

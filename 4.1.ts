@@ -999,76 +999,79 @@ hcl:a3046e pid:626863952 ecl:lzr iyr:2029 eyr:2024 byr:2000 hgt:193cm
 cid:244
 hcl:#866857 ecl:amb byr:1931
 eyr:1928 pid:557376401 hgt:182cm iyr:2013
-`
-const parsed = input.trim().split('\n\n').map((str) => {
-  return str.split(/\s/).map(parts => parts.split(':')).reduce((obj, [key, value]) => {
-    obj[key] = value;
-    return obj
-  }, {} as Record<string, string | undefined>)
-})
-console.log(parsed)
+`;
+const parsed = input
+  .trim()
+  .split('\n\n')
+  .map((str) => {
+    return str
+      .split(/\s/)
+      .map((parts) => parts.split(':'))
+      .reduce((obj, [key, value]) => {
+        obj[key] = value;
+        return obj;
+      }, {} as Record<string, string | undefined>);
+  });
+console.log(parsed);
 
-
-
-const validators: Record<string, ((value: string) => boolean)> = {
+const validators: Record<string, (value: string) => boolean> = {
   byr(value) {
-    const v = parseInt(value)
+    const v = parseInt(value);
     return v >= 1920 && v <= 2002;
   },
   iyr(value) {
-    const v = parseInt(value)
-    return v >= 2010 && v <= 2020
+    const v = parseInt(value);
+    return v >= 2010 && v <= 2020;
   },
   eyr(value) {
-    const v = parseInt(value)
-    return v >= 2020 && v <= 2030
+    const v = parseInt(value);
+    return v >= 2020 && v <= 2030;
   },
   hgt(value) {
     if (!value) {
-      return false
+      return false;
     }
-    const parts = value.match(/^([0-9]+)(cm|in)$/)
+    const parts = value.match(/^([0-9]+)(cm|in)$/);
     if (!parts) {
-      return false
+      return false;
     }
-    const digit = parseInt(parts[1])
-    const unit = parts[2]
+    const digit = parseInt(parts[1]);
+    const unit = parts[2];
     if (unit === 'cm') {
-      return digit >= 150 && digit <= 193
+      return digit >= 150 && digit <= 193;
     }
     if (unit === 'in') {
-      return digit >= 59 && digit <= 76
+      return digit >= 59 && digit <= 76;
     }
 
-    return false
+    return false;
   },
   hcl(value) {
-    return /^\#([0-9]|a|b|c|d|e|f){6}$/i.test(value)
+    return /^\#([0-9]|a|b|c|d|e|f){6}$/i.test(value);
   },
   ecl(value) {
-    return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(value)
+    return ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'].includes(value);
   },
   pid(value) {
-    return /^[0-9]{9}$/i.test(value)
+    return /^[0-9]{9}$/i.test(value);
   },
-}
+};
 
-let numValid = 0
+let numValid = 0;
 for (const passport of parsed) {
-  let valid = true
+  let valid = true;
   for (const key in validators) {
-    const value = passport[key]
-    const validate = validators[key]
+    const value = passport[key];
+    const validate = validators[key];
 
     if (!value || !validate(value)) {
-      valid = false
+      valid = false;
       break;
     }
   }
   if (valid) {
-    numValid++
+    numValid++;
   }
-
 }
-console.log(numValid, 'of', parsed.length)
+console.log(numValid, 'of', parsed.length);
 // console.log(result.reduce((sum, num) => sum * num, 1))

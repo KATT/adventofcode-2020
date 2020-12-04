@@ -199,10 +199,9 @@ const list = `
 1981
 1791
 1975
-`
+`;
 
-const nums = list.trim().split('\n').map(Number)
-
+const nums = list.trim().split('\n').map(Number);
 
 function main() {
   for (const num1 of nums) {
@@ -212,14 +211,13 @@ function main() {
       }
       for (const num3 of nums) {
         if (num1 + num2 + num3 === 2020) {
-          console.log({ num1, num2, num3 })
-          return num1 * num2 * num3
+          console.log({ num1, num2, num3 });
+          return num1 * num2 * num3;
         }
       }
     }
   }
-  throw new Error('Not found')
+  throw new Error('Not found');
 }
 
-
-console.log(main())
+console.log(main());

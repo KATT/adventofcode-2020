@@ -999,15 +999,20 @@ hcl:a3046e pid:626863952 ecl:lzr iyr:2029 eyr:2024 byr:2000 hgt:193cm
 cid:244
 hcl:#866857 ecl:amb byr:1931
 eyr:1928 pid:557376401 hgt:182cm iyr:2013
-`
-const parsed = input.trim().split('\n\n').map((str) => {
-  return str.split(/\s/).map(parts => parts.split(':')).reduce((obj, [key, value]) => {
-    obj[key] = value;
-    return obj
-  }, {} as Record<string, string | undefined>)
-})
-console.log(parsed)
-
+`;
+const parsed = input
+  .trim()
+  .split('\n\n')
+  .map((str) => {
+    return str
+      .split(/\s/)
+      .map((parts) => parts.split(':'))
+      .reduce((obj, [key, value]) => {
+        obj[key] = value;
+        return obj;
+      }, {} as Record<string, string | undefined>);
+  });
+console.log(parsed);
 
 const FIELDS = [
   ['byr', 'Birth Year'],
@@ -1018,23 +1023,22 @@ const FIELDS = [
   ['ecl', 'Eye Color'],
   ['pid', 'Passport ID'],
   ['cid', 'Country ID'],
-]
-let numValid = 0
+];
+let numValid = 0;
 for (const passport of parsed) {
-  const optionals = ['cid']
-  const missing: string[] = []
+  const optionals = ['cid'];
+  const missing: string[] = [];
   for (const [fieldId] of FIELDS) {
     if (optionals.includes(fieldId)) {
-      continue
+      continue;
     }
     if (!passport[fieldId]) {
-      missing.push(fieldId)
+      missing.push(fieldId);
     }
   }
   if (missing.length === 0) {
-    numValid++
+    numValid++;
   }
-
 }
-console.log(numValid, 'of', parsed.length)
+console.log(numValid, 'of', parsed.length);
 // console.log(result.reduce((sum, num) => sum * num, 1))
