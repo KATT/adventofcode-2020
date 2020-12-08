@@ -626,12 +626,10 @@ const instructions = input8a
   .trim()
   .split('\n')
   .map((str) => {
-    const [all, command, plusOrMinus, digit] = str.match(
-      /^(\w+) (\+|\-)(\d+)/,
-    )!;
+    const parts = str.split(' ');
     return {
-      command: command as 'jmp' | 'acc' | 'nop',
-      steps: parseInt(digit) * (plusOrMinus === '+' ? 1 : -1),
+      command: parts[0] as 'jmp' | 'acc' | 'nop',
+      steps: parseInt(parts[1]),
     };
   });
 

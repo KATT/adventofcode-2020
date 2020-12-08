@@ -626,13 +626,10 @@ const instructions = input8a
   .trim()
   .split('\n')
   .map((str) => {
-    const [all, command, plusOrMinus, digit] = str.match(
-      /^(\w+) (\+|\-)(\d+)/,
-    )!;
+    const parts = str.split(' ');
     return {
-      command: command as 'jmp' | 'acc' | 'nop',
-      steps: parseInt(digit) * (plusOrMinus === '+' ? 1 : -1),
-      str,
+      command: parts[0] as 'jmp' | 'acc' | 'nop',
+      steps: parseInt(parts[1]),
     };
   });
 
@@ -652,7 +649,7 @@ while (position < instructions.length) {
 
     break;
   }
-  console.log(`pos ${position}: ${inst.str}`);
+
   visited.add(position);
   if (command === 'acc') {
     acc += steps;
