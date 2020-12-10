@@ -111,35 +111,35 @@ const numbers = input
   .map(Number)
   .sort((a, b) => a - b);
 
-const highest = numbers.reduce((num1, num2) => Math.max(num1, num2), 0) + 3;
+const highest = numbers[numbers.length - 1] + 3;
 
-const cache: Record<number, number | undefined> = {};
-function findPath(index = 0, prevNumber = 0, fork: number[] = []) {
-  let numForks = 0;
-  if (cache[index]) {
-    return cache[index];
+const cache = new Map<number, number>();
+function calcPossiblePaths(index = 0, path: number[] = []) {
+  if (cache.has(index)) {
+    return cache.get(index);
   }
+  let numSolutions = 0;
+  const prevNumber = numbers[index - 1] ?? 0;
 
   for (let i = index; i < numbers.length; i++) {
     const num = numbers[i];
-    const possiblePath = [...fork, num];
+    const possiblePath = [...path, num];
 
     if (num - prevNumber > 3) {
       break;
     }
     if (highest - num <= 3) {
-      numForks++;
+      numSolutions++;
     }
-    numForks += findPath(i + 1, num, possiblePath);
+    numSolutions += calcPossiblePaths(i + 1, possiblePath);
   }
-  cache[index] = numForks;
+  cache.set(index, numSolutions);
 
-  return numForks;
+  return numSolutions;
 }
 
-console.log('Starting');
 console.time('Calc');
-const paths = findPath();
+const paths = calcPossiblePaths();
 console.timeEnd('Calc');
 
 console.log(paths);
