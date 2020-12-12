@@ -116,23 +116,20 @@ function findAdjacentSeat(
   rowIndex: number,
   columnIndex: number,
   rule: RuleTuple,
-) {
+): Type.EMPTY_SEAT | Type.OCCUPIED_SEAT | null {
   let multiplier = 1;
-  do {
+  while (true) {
     rowIndex += rule[0] * multiplier;
     columnIndex += rule[1] * multiplier;
 
     const seat = plan[rowIndex]?.[columnIndex];
+    if (!seat) {
+      break;
+    }
     if (seat === Type.EMPTY_SEAT || seat === Type.OCCUPIED_SEAT) {
       return seat;
     }
-  } while (
-    rowIndex >= 0 &&
-    columnIndex >= 0 &&
-    rowIndex < plan.length &&
-    columnIndex < plan[0].length
-  );
-
+  }
   return null;
 }
 
